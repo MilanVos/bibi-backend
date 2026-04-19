@@ -95,6 +95,27 @@ async function initDb() {
     FOREIGN KEY (auteur_id) REFERENCES users(id) ON DELETE SET NULL
   )`)
 
+  _db.run(`CREATE TABLE IF NOT EXISTS mappen (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    naam TEXT NOT NULL,
+    beschrijving TEXT DEFAULT '',
+    aangemaakt_op TEXT DEFAULT (datetime('now')),
+    aangemaakt_door INTEGER,
+    FOREIGN KEY (aangemaakt_door) REFERENCES users(id) ON DELETE SET NULL
+  )`)
+
+  _db.run(`CREATE TABLE IF NOT EXISTS map_items (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    map_id INTEGER NOT NULL,
+    titel TEXT NOT NULL,
+    inhoud TEXT DEFAULT '',
+    aangemaakt_op TEXT DEFAULT (datetime('now')),
+    gewijzigd_op TEXT,
+    auteur_id INTEGER,
+    FOREIGN KEY (map_id) REFERENCES mappen(id) ON DELETE CASCADE,
+    FOREIGN KEY (auteur_id) REFERENCES users(id) ON DELETE SET NULL
+  )`)
+
   save()
 
   const admin = db.prepare('SELECT id FROM users WHERE username = ?').get('admin')
