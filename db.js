@@ -61,10 +61,18 @@ async function initDb() {
     username TEXT UNIQUE NOT NULL,
     password TEXT NOT NULL,
     is_staff INTEGER DEFAULT 0,
+    is_goedgekeurd INTEGER DEFAULT 0,
     totp_secret TEXT,
     is_totp_enabled INTEGER DEFAULT 0,
+    totp_method TEXT DEFAULT 'totp',
+    email TEXT,
     created_at TEXT DEFAULT (datetime('now'))
   )`)
+
+  try { _db.run(`ALTER TABLE users ADD COLUMN totp_method TEXT DEFAULT 'totp'`) } catch {}
+  try { _db.run(`ALTER TABLE users ADD COLUMN email TEXT`) } catch {}
+  try { _db.run(`ALTER TABLE users ADD COLUMN is_goedgekeurd INTEGER DEFAULT 0`) } catch {}
+  _db.run(`UPDATE users SET is_goedgekeurd = 1 WHERE is_staff = 1`)
 
   _db.run(`CREATE TABLE IF NOT EXISTS notulen (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -92,7 +100,7 @@ async function initDb() {
   const admin = db.prepare('SELECT id FROM users WHERE username = ?').get('admin')
   if (!admin) {
     const hash = bcrypt.hashSync('admin123', 10)
-    db.prepare('INSERT INTO users (username, password, is_staff) VALUES (?, ?, 1)').run('admin', hash)
+    db.prepare('INSERT INTO users (username, password, is_staff, is_goedgekeurd) VALUES (?, ?, 1, 1)').run('admin', hash)
     console.log('Admin aangemaakt: admin / admin123')
   }
 }

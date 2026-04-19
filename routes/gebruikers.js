@@ -9,8 +9,20 @@ function isAdmin(req, res, next) {
 }
 
 router.get('/', auth, isAdmin, (req, res) => {
-  const rows = db.prepare('SELECT id, username, is_staff, is_totp_enabled, created_at FROM users ORDER BY username').all()
-  res.json(rows.map(u => ({ ...u, is_staff: u.is_staff === 1, is_totp_enabled: u.is_totp_enabled === 1 })))
+  const rows = db.prepare('SELECT id, username, is_staff, is_goedgekeurd, is_totp_enabled, created_at FROM users ORDER BY is_goedgekeurd ASC, username ASC').all()
+  res.json(rows.map(u => ({
+    ...u,
+    is_staff: u.is_staff === 1,
+    is_goedgekeurd: u.is_goedgekeurd === 1,
+    is_totp_enabled: u.is_totp_enabled === 1
+  })))
+})
+
+router.patch('/:id/goedkeuren', auth, isAdmin, (req, res) => {
+  const row = db.prepare('SELECT id FROM users WHERE id = ?').get(req.params.id)
+  if (!row) return res.status(404).json({ detail: 'Gebruiker niet gevonden.' })
+  db.prepare('UPDATE users SET is_goedgekeurd = 1 WHERE id = ?').run(req.params.id)
+  res.json({ is_goedgekeurd: true })
 })
 
 router.patch('/:id/rol', auth, isAdmin, (req, res) => {
@@ -18,7 +30,8 @@ router.patch('/:id/rol', auth, isAdmin, (req, res) => {
   const row = db.prepare('SELECT id, is_staff FROM users WHERE id = ?').get(req.params.id)
   if (!row) return res.status(404).json({ detail: 'Gebruiker niet gevonden.' })
   const nieuweRol = row.is_staff === 1 ? 0 : 1
-  db.prepare('UPDATE users SET is_staff = ? WHERE id = ?').run(nieuweRol, req.params.id)
+  const nieuweGoedgekeurd = nieuweRol === 1 ? 1 : row.is_goedgekeurd
+  db.prepare('UPDATE users SET is_staff = ?, is_goedgekeurd = ? WHERE id = ?').run(nieuweRol, nieuweGoedgekeurd, req.params.id)
   res.json({ is_staff: nieuweRol === 1 })
 })
 
