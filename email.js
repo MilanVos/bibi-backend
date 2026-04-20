@@ -1,21 +1,12 @@
-const nodemailer = require('nodemailer')
+const { Resend } = require('resend')
 
-const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST || 'smtp.gmail.com',
-  port: parseInt(process.env.SMTP_PORT || '587'),
-  secure: process.env.SMTP_SECURE === 'true',
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS
-  }
-})
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 async function sendOTP(to, code) {
-  await transporter.sendMail({
-    from: process.env.SMTP_FROM || process.env.SMTP_USER,
+  await resend.emails.send({
+    from: process.env.SMTP_FROM || 'BibiBeheer <onboarding@resend.dev>',
     to,
     subject: 'BibiBeheer - Verificatiecode',
-    text: `Jouw verificatiecode is: ${code}\n\nDeze code is 10 minuten geldig.`,
     html: `
       <div style="font-family:sans-serif;max-width:400px;margin:0 auto">
         <h2 style="color:#051b4a">BibiBeheer</h2>
