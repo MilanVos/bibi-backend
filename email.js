@@ -1,8 +1,7 @@
 const { Resend } = require('resend')
 
-const resend = new Resend(process.env.RESEND_API_KEY)
-
 async function sendOTP(to, code) {
+  const resend = new Resend(process.env.RESEND_API_KEY)
   await resend.emails.send({
     from: process.env.SMTP_FROM || 'BibiBeheer <onboarding@resend.dev>',
     to,
