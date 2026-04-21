@@ -16,7 +16,7 @@ const allowedOrigins = [
 ].filter(Boolean)
 
 app.use(cors({ origin: allowedOrigins }))
-app.use(express.json())
+app.use(express.json({ limit: '20mb' }))
 
 app.use((req, res, next) => {
   console.log(`${req.method} ${req.path}`)
@@ -28,6 +28,7 @@ app.use('/api/notulen', require('./routes/notulen'))
 app.use('/api/signalen', require('./routes/signalen'))
 app.use('/api/gebruikers', require('./routes/gebruikers'))
 app.use('/api/mappen', require('./routes/mappen'))
+app.use('/api/categorieen', require('./routes/categorieen'))
 
 const PORT = process.env.PORT || 8000
 

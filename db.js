@@ -116,6 +116,30 @@ async function initDb() {
     FOREIGN KEY (auteur_id) REFERENCES users(id) ON DELETE SET NULL
   )`)
 
+  _db.run(`CREATE TABLE IF NOT EXISTS categorieen (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    naam TEXT NOT NULL,
+    beschrijving TEXT DEFAULT '',
+    aangemaakt_op TEXT DEFAULT (datetime('now')),
+    aangemaakt_door INTEGER,
+    FOREIGN KEY (aangemaakt_door) REFERENCES users(id) ON DELETE SET NULL
+  )`)
+
+  _db.run(`CREATE TABLE IF NOT EXISTS categorie_items (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    categorie_id INTEGER NOT NULL,
+    type TEXT NOT NULL DEFAULT 'tekst',
+    titel TEXT NOT NULL,
+    inhoud TEXT DEFAULT '',
+    bestand_naam TEXT,
+    bestand_data TEXT,
+    aangemaakt_op TEXT DEFAULT (datetime('now')),
+    gewijzigd_op TEXT,
+    auteur_id INTEGER,
+    FOREIGN KEY (categorie_id) REFERENCES categorieen(id) ON DELETE CASCADE,
+    FOREIGN KEY (auteur_id) REFERENCES users(id) ON DELETE SET NULL
+  )`)
+
   save()
 
   const admin = db.prepare('SELECT id FROM users WHERE username = ?').get('admin')
