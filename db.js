@@ -140,6 +140,24 @@ async function initDb() {
     FOREIGN KEY (auteur_id) REFERENCES users(id) ON DELETE SET NULL
   )`)
 
+  _db.run(`CREATE TABLE IF NOT EXISTS instellingen (
+    sleutel TEXT PRIMARY KEY,
+    waarde TEXT NOT NULL DEFAULT ''
+  )`)
+
+  const defaultSettings = [
+    ['site_naam', 'BibiBeheer'],
+    ['primary_color', '#051b4a'],
+    ['accent_color', '#3a0647'],
+    ['logo_base64', ''],
+    ['welkom_tekst', ''],
+    ['registreren_toegestaan', '1'],
+    ['goedkeuring_vereist', '1']
+  ]
+  for (const [sleutel, waarde] of defaultSettings) {
+    _db.run(`INSERT OR IGNORE INTO instellingen (sleutel, waarde) VALUES (?, ?)`, [sleutel, waarde])
+  }
+
   save()
 
   const admin = db.prepare('SELECT id FROM users WHERE username = ?').get('admin')

@@ -29,6 +29,7 @@ app.use('/api/signalen', require('./routes/signalen'))
 app.use('/api/gebruikers', require('./routes/gebruikers'))
 app.use('/api/mappen', require('./routes/mappen'))
 app.use('/api/categorieen', require('./routes/categorieen'))
+app.use('/api/instellingen', require('./routes/instellingen'))
 
 const PORT = process.env.PORT || 8000
 

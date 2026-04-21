@@ -41,14 +41,18 @@ function makeTokens(user) {
 }
 
 router.post('/register', (req, res) => {
+  const regToegestaan = db.prepare('SELECT waarde FROM instellingen WHERE sleutel = ?').get('registreren_toegestaan')
+  if (regToegestaan?.waarde === '0') return res.status(403).json({ detail: 'Registreren is uitgeschakeld door de beheerder.' })
   const { username, password, email } = req.body
   if (!username || !password) return res.status(400).json({ detail: 'Vul alle velden in.' })
   if (password.length < 6) return res.status(400).json({ detail: 'Wachtwoord minimaal 6 tekens.' })
   const exists = db.prepare('SELECT id FROM users WHERE username = ?').get(username)
   if (exists) return res.status(400).json({ username: ['Deze gebruikersnaam is al in gebruik.'] })
   const hash = bcrypt.hashSync(password, 10)
-  db.prepare('INSERT INTO users (username, password, email) VALUES (?, ?, ?)').run(username, hash, email || null)
-  res.status(201).json({ detail: 'Account aangemaakt. Log in en stel 2FA in.' })
+  const goedkeuringVereist = db.prepare('SELECT waarde FROM instellingen WHERE sleutel = ?').get('goedkeuring_vereist')
+  const isGoedgekeurd = goedkeuringVereist?.waarde === '0' ? 1 : 0
+  db.prepare('INSERT INTO users (username, password, email, is_goedgekeurd) VALUES (?, ?, ?, ?)').run(username, hash, email || null, isGoedgekeurd)
+  res.status(201).json({ detail: isGoedgekeurd ? 'Account aangemaakt. Log in en stel 2FA in.' : 'Account aangemaakt. Wacht op goedkeuring van een admin.' })
 })
 
 router.post('/login', async (req, res) => {
