@@ -1,18 +1,9 @@
-const nodemailer = require('nodemailer')
+const { Resend } = require('resend')
 
 async function sendOTP(to, code) {
-  const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: parseInt(process.env.SMTP_PORT),
-    secure: process.env.SMTP_SECURE === 'true',
-    auth: {
-      user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASS
-    }
-  })
-
-  await transporter.sendMail({
-    from: process.env.SMTP_FROM,
+  const resend = new Resend(process.env.RESEND_API_KEY)
+  await resend.emails.send({
+    from: 'BibiBeheer <onboarding@resend.dev>',
     to,
     subject: 'BibiBeheer - Verificatiecode',
     html: `
