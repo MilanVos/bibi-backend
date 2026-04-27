@@ -33,7 +33,7 @@ export default async function PortaalDashboard() {
         {[
           { label: "Forum berichten", value: forumCount, icon: MessageSquare, color: "text-blue-600" },
           { label: "Bestanden", value: uploadCount, icon: FileText, color: "text-green-600" },
-          { label: "Jouw rol", value: user?.role === "ADMIN" ? "Beheerder" : "Lid", icon: Users, color: "text-purple-600" },
+          { label: "Jouw rol", value: user?.role === "SUPERADMIN" ? "Super Beheerder" : user?.role === "ADMIN" ? "Beheerder" : user?.role === "EDITOR" ? "Redacteur" : "Lid", icon: Users, color: "text-purple-600" },
           { label: "Status", value: "Actief", icon: FileText, color: "text-orange-600" },
         ].map(({ label, value, icon: Icon, color }) => (
           <Card key={label} className="bg-white">
