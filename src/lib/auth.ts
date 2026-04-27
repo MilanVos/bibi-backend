@@ -5,7 +5,7 @@ import { db } from "./db"
 
 export const auth = betterAuth({
   database: prismaAdapter(db, {
-    provider: "sqlite",
+    provider: "postgresql",
   }),
   emailAndPassword: {
     enabled: true,
@@ -45,6 +45,12 @@ export const auth = betterAuth({
   },
   secret: process.env.BETTER_AUTH_SECRET ?? "dev-secret-change-in-production",
   baseURL: process.env.BETTER_AUTH_URL ?? "http://localhost:3000",
+  trustedOrigins: [
+    "http://localhost:3000",
+    "https://bibi-backend-production-48a2.up.railway.app",
+    "https://jongerenraadd.nl",
+    "https://www.jongerenraadd.nl",
+  ],
 })
 
 export type Session = typeof auth.$Infer.Session
