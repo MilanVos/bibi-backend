@@ -164,9 +164,10 @@ model Upload {
   id        String   @id @default(cuid())
   userId    String
   filename  String
-  path      String
+  path      String   @default("")
   mimetype  String
   size      Int
+  data      Bytes?
   public    Boolean  @default(false)
   createdAt DateTime @default(now())
 

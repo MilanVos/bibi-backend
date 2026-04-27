@@ -2,8 +2,6 @@ import { NextRequest, NextResponse } from "next/server"
 import { auth } from "@/lib/auth"
 import { db } from "@/lib/db"
 import { headers } from "next/headers"
-import { writeFile, mkdir } from "fs/promises"
-import path from "path"
 
 const MAX_SIZE = 10 * 1024 * 1024
 
@@ -22,26 +20,19 @@ export async function POST(req: NextRequest) {
   if (!file) return NextResponse.json({ error: "Geen bestand" }, { status: 400 })
   if (file.size > MAX_SIZE) return NextResponse.json({ error: "Bestand te groot (max 10MB)" }, { status: 400 })
 
-  const uploadsDir = path.join(process.cwd(), "public", "uploads")
-  await mkdir(uploadsDir, { recursive: true })
-
-  const ext = path.extname(file.name)
-  const safeName = `${Date.now()}-${Math.random().toString(36).slice(2)}${ext}`
-  const filePath = path.join(uploadsDir, safeName)
-
   const buffer = Buffer.from(await file.arrayBuffer())
-  await writeFile(filePath, buffer)
 
   const upload = await db.upload.create({
     data: {
       userId: session.user.id,
       filename: file.name,
-      path: `/uploads/${safeName}`,
+      path: "",
       mimetype: file.type,
       size: file.size,
+      data: buffer,
       public: true,
     },
   })
 
-  return NextResponse.json(upload, { status: 201 })
+  return NextResponse.json({ id: upload.id, filename: upload.filename }, { status: 201 })
 }
