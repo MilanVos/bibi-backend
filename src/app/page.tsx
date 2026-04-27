@@ -15,7 +15,7 @@ export default function HomePage() {
           </div>
           <div className="flex gap-3">
             <Link href="/login">
-              <Button variant="outline" className="border-white/30 text-white hover:bg-white/10">
+              <Button variant="outline" className="bg-transparent border-white/30 text-white hover:bg-white/10">
                 Inloggen
               </Button>
             </Link>
@@ -44,7 +44,7 @@ export default function HomePage() {
             </Button>
           </Link>
           <Link href="/login">
-            <Button size="lg" variant="outline" className="border-white/40 text-white hover:bg-white/10 px-8">
+            <Button size="lg" variant="outline" className="bg-transparent border-white/40 text-white hover:bg-white/10 px-8">
               Al lid? Inloggen
             </Button>
           </Link>

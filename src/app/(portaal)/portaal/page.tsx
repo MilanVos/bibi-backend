@@ -23,10 +23,10 @@ export default async function PortaalDashboard() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-slate-800">
+        <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-100">
           Welkom terug, {user?.name?.split(" ")[0]}! 👋
         </h1>
-        <p className="text-slate-500 mt-1">Hier is een overzicht van het portaal</p>
+        <p className="text-slate-500 dark:text-slate-400 mt-1">Hier is een overzicht van het portaal</p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -36,12 +36,12 @@ export default async function PortaalDashboard() {
           { label: "Jouw rol", value: user?.role === "SUPERADMIN" ? "Super Beheerder" : user?.role === "ADMIN" ? "Beheerder" : user?.role === "EDITOR" ? "Redacteur" : "Lid", icon: Users, color: "text-purple-600" },
           { label: "Status", value: "Actief", icon: FileText, color: "text-orange-600" },
         ].map(({ label, value, icon: Icon, color }) => (
-          <Card key={label} className="bg-white">
+          <Card key={label} className="bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700">
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-slate-500">{label}</p>
-                  <p className="text-2xl font-bold text-slate-800">{value}</p>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">{label}</p>
+                  <p className="text-2xl font-bold text-slate-800 dark:text-slate-100">{value}</p>
                 </div>
                 <Icon className={`w-8 h-8 ${color} opacity-80`} />
               </div>
@@ -51,9 +51,9 @@ export default async function PortaalDashboard() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card className="bg-white">
+        <Card className="bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700">
           <CardHeader>
-            <CardTitle className="text-slate-800 text-lg">Recente forum berichten</CardTitle>
+            <CardTitle className="text-slate-800 dark:text-slate-100 text-lg">Recente forum berichten</CardTitle>
           </CardHeader>
           <CardContent>
             {recentPosts.length === 0 ? (
@@ -62,10 +62,10 @@ export default async function PortaalDashboard() {
               <div className="space-y-3">
                 {recentPosts.map((post) => (
                   <Link key={post.id} href={`/portaal/forum/${post.id}`}>
-                    <div className="flex items-start gap-3 p-3 rounded-lg hover:bg-slate-50 transition-colors">
+                    <div className="flex items-start gap-3 p-3 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
                       <MessageSquare className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
                       <div className="min-w-0">
-                        <p className="text-sm font-medium text-slate-800 truncate">{post.title}</p>
+                        <p className="text-sm font-medium text-slate-800 dark:text-slate-100 truncate">{post.title}</p>
                         <p className="text-xs text-slate-400">
                           {post.user.name} · {formatDateTime(post.createdAt)}
                         </p>
@@ -78,9 +78,9 @@ export default async function PortaalDashboard() {
           </CardContent>
         </Card>
 
-        <Card className="bg-white">
+        <Card className="bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700">
           <CardHeader>
-            <CardTitle className="text-slate-800 text-lg">Snel navigeren</CardTitle>
+            <CardTitle className="text-slate-800 dark:text-slate-100 text-lg">Snel navigeren</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-2 gap-3">
@@ -91,9 +91,9 @@ export default async function PortaalDashboard() {
                 { href: "/portaal/profiel", label: "Mijn profiel", icon: Users },
               ].map(({ href, label, icon: Icon }) => (
                 <Link key={href} href={href}>
-                  <div className="flex items-center gap-3 p-3 rounded-lg border border-slate-200 hover:border-blue-300 hover:bg-blue-50 transition-colors">
+                  <div className="flex items-center gap-3 p-3 rounded-lg border border-slate-200 dark:border-slate-600 hover:border-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors">
                     <Icon className="w-5 h-5 text-blue-600" />
-                    <span className="text-sm font-medium text-slate-700">{label}</span>
+                    <span className="text-sm font-medium text-slate-700 dark:text-slate-200">{label}</span>
                   </div>
                 </Link>
               ))}

@@ -59,8 +59,8 @@ export function PortaalSidebar({ categories, user }: SidebarProps) {
   const isAdmin = user.role === "ADMIN" || user.role === "SUPERADMIN"
 
   return (
-    <aside className="w-64 bg-slate-900 text-white flex flex-col flex-shrink-0 h-screen sticky top-0">
-      <div className="p-4 border-b border-slate-700">
+    <aside className="w-64 bg-slate-900 dark:bg-slate-950 text-white flex flex-col flex-shrink-0 h-screen sticky top-0">
+      <div className="p-4 border-b border-slate-700 dark:border-slate-800">
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 bg-blue-600 rounded-lg flex items-center justify-center font-bold text-lg flex-shrink-0">
             J
