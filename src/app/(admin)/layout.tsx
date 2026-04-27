@@ -16,16 +16,16 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   }
 
   return (
-    <div className="min-h-screen bg-slate-100 flex">
+    <div className="min-h-screen bg-slate-100 dark:bg-slate-900 flex">
       <AdminSidebar />
       <div className="flex-1 min-w-0">
-        <header className="bg-white border-b border-slate-200 px-6 py-3 flex items-center justify-between">
-          <h1 className="font-semibold text-slate-800">Beheer Dashboard</h1>
+        <header className="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 px-6 py-3 flex items-center justify-between">
+          <h1 className="font-semibold text-slate-800 dark:text-slate-100">Beheer Dashboard</h1>
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center text-white text-xs font-bold">
               A
             </div>
-            <span className="text-sm text-slate-600 hidden sm:block">{user.name}</span>
+            <span className="text-sm text-slate-600 dark:text-slate-300 hidden sm:block">{user.name}</span>
           </div>
         </header>
         <main className="p-6">{children}</main>
