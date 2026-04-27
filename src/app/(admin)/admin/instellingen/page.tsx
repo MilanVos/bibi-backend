@@ -9,13 +9,13 @@ export default async function InstellingenPage() {
   return (
     <div className="space-y-6 max-w-2xl">
       <div>
-        <h1 className="text-2xl font-bold text-slate-800">Site instellingen</h1>
-        <p className="text-slate-500 text-sm mt-1">Algemene configuratie van het portaal</p>
+        <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-100">Site instellingen</h1>
+        <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">Algemene configuratie van het portaal</p>
       </div>
 
-      <Card className="bg-white">
+      <Card className="bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700">
         <CardHeader>
-          <CardTitle className="text-base text-slate-800">Algemeen</CardTitle>
+          <CardTitle className="text-base text-slate-800 dark:text-slate-100">Algemeen</CardTitle>
         </CardHeader>
         <CardContent>
           <InstellingenForm settings={settingsMap} />
