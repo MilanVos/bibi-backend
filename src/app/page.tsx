@@ -1,6 +1,5 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { ThemeToggle } from "@/components/theme-toggle"
 import { Users, Shield, Layout, MessageSquare } from "lucide-react"
 
 export default function HomePage() {
@@ -15,7 +14,6 @@ export default function HomePage() {
             <span className="text-white font-bold text-xl">Jongerenraad</span>
           </div>
           <div className="flex gap-3 items-center">
-            <ThemeToggle className="text-white/70 hover:text-white hover:bg-white/10" />
             <Link href="/login">
               <Button variant="outline" className="bg-transparent border-white/30 text-white hover:bg-white/10">
                 Inloggen

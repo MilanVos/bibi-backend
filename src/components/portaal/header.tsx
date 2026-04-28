@@ -1,10 +1,9 @@
 "use client"
 
 import { useRouter } from "next/navigation"
-import { useTheme } from "next-themes"
 import { signOut } from "@/lib/auth-client"
 import { Button } from "@/components/ui/button"
-import { LogOut, Bell, Sun, Moon } from "lucide-react"
+import { LogOut, Bell } from "lucide-react"
 import { getInitials } from "@/lib/utils"
 
 interface HeaderProps {
@@ -24,7 +23,6 @@ const ROLE_LABELS: Record<string, string> = {
 
 export function PortaalHeader({ user }: HeaderProps) {
   const router = useRouter()
-  const { theme, setTheme } = useTheme()
 
   async function handleSignOut() {
     await signOut()
@@ -35,15 +33,6 @@ export function PortaalHeader({ user }: HeaderProps) {
     <header className="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 px-6 py-3 flex items-center justify-between sticky top-0 z-10">
       <div />
       <div className="flex items-center gap-4">
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-          className="text-slate-500 dark:text-slate-400"
-          title={theme === "dark" ? "Lichte modus" : "Donkere modus"}
-        >
-          {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-        </Button>
         <Button variant="ghost" size="icon" className="text-slate-500 dark:text-slate-400">
           <Bell className="w-5 h-5" />
         </Button>
