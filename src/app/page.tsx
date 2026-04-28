@@ -1,11 +1,12 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import { ThemeToggle } from "@/components/theme-toggle"
 import { Users, Shield, Layout, MessageSquare } from "lucide-react"
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-blue-600">
-      <header className="border-b border-white/10">
+    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-blue-600 dark:from-blue-900 dark:via-blue-800 dark:to-blue-600 light:from-blue-50 light:via-blue-100 light:to-white transition-colors">
+      <header className="border-b border-white/10 dark:border-white/10">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center">
@@ -13,7 +14,8 @@ export default function HomePage() {
             </div>
             <span className="text-white font-bold text-xl">Jongerenraad</span>
           </div>
-          <div className="flex gap-3">
+          <div className="flex gap-3 items-center">
+            <ThemeToggle className="text-white/70 hover:text-white hover:bg-white/10" />
             <Link href="/login">
               <Button variant="outline" className="bg-transparent border-white/30 text-white hover:bg-white/10">
                 Inloggen

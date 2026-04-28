@@ -63,12 +63,12 @@ export default function LoginPage() {
   }
 
   return (
-    <Card className="bg-white/5 border-white/10 text-white">
+    <Card className="bg-white/5 dark:bg-white/5 bg-white border-white/10 dark:border-white/10 border-slate-200 text-white dark:text-white text-slate-800">
       <CardHeader>
-        <CardTitle className="text-white">
+        <CardTitle className="text-white dark:text-white text-slate-800">
           {needsTwoFactor ? "Twee-factor verificatie" : "Inloggen"}
         </CardTitle>
-        <CardDescription className="text-slate-400">
+        <CardDescription className="text-slate-400 dark:text-slate-400 text-slate-500">
           {needsTwoFactor
             ? "Voer de code uit je authenticator-app in"
             : "Voer je gegevens in om in te loggen"}
@@ -86,7 +86,7 @@ export default function LoginPage() {
           {!needsTwoFactor ? (
             <>
               <div className="space-y-2">
-                <Label htmlFor="email" className="text-slate-300">E-mailadres</Label>
+                <Label htmlFor="email" className="text-slate-300 dark:text-slate-300 text-slate-700">E-mailadres</Label>
                 <Input
                   id="email"
                   type="email"
@@ -94,11 +94,11 @@ export default function LoginPage() {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="jij@example.com"
                   required
-                  className="bg-white/10 border-white/20 text-white placeholder:text-slate-500"
+                  className="bg-white/10 dark:bg-white/10 bg-slate-50 border-white/20 dark:border-white/20 border-slate-300 text-white dark:text-white text-slate-800 placeholder:text-slate-500"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="password" className="text-slate-300">Wachtwoord</Label>
+                <Label htmlFor="password" className="text-slate-300 dark:text-slate-300 text-slate-700">Wachtwoord</Label>
                 <Input
                   id="password"
                   type="password"
@@ -106,13 +106,13 @@ export default function LoginPage() {
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
                   required
-                  className="bg-white/10 border-white/20 text-white placeholder:text-slate-500"
+                  className="bg-white/10 dark:bg-white/10 bg-slate-50 border-white/20 dark:border-white/20 border-slate-300 text-white dark:text-white text-slate-800 placeholder:text-slate-500"
                 />
               </div>
             </>
           ) : (
             <div className="space-y-2">
-              <Label htmlFor="code" className="text-slate-300">Verificatiecode</Label>
+              <Label htmlFor="code" className="text-slate-300 dark:text-slate-300 text-slate-700">Verificatiecode</Label>
               <Input
                 id="code"
                 type="text"
@@ -121,7 +121,7 @@ export default function LoginPage() {
                 placeholder="000000"
                 maxLength={6}
                 required
-                className="bg-white/10 border-white/20 text-white placeholder:text-slate-500 text-center text-2xl tracking-widest"
+                className="bg-white/10 dark:bg-white/10 bg-slate-50 border-white/20 dark:border-white/20 border-slate-300 text-white dark:text-white text-slate-800 placeholder:text-slate-500 text-center text-2xl tracking-widest"
               />
             </div>
           )}
@@ -133,7 +133,7 @@ export default function LoginPage() {
             {needsTwoFactor ? "Verifiëren" : "Inloggen"}
           </Button>
           {!needsTwoFactor && (
-            <p className="text-slate-400 text-sm text-center">
+            <p className="text-slate-400 dark:text-slate-400 text-slate-500 text-sm text-center">
               Nog geen account?{" "}
               <Link href="/registreren" className="text-blue-400 hover:underline">
                 Registreren
